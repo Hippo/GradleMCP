@@ -9,7 +9,7 @@ Supported versions:
 
 1.8.8
 
-How to setup:
+# How to setup #
 
 # Video tutorial: Coming soon #
 
@@ -81,3 +81,16 @@ Then you will see "Working directory: " then a textbox with a file path in it, j
 Now just click apply then ok.
 
 Now you are done! Just click the green arrow right by the dropdown box then start coding away.
+
+
+
+
+# How to compile #
+
+Step 1: Open your client folder with terminal and type "chmod +x CompileClient.sh"
+
+Step 2: Type in the terminal "./CompileClient.sh"
+
+Step 3: Sit back and wait for the message "Please enter a client name and version (example: Client v1):" then you will enter your client name and (optional) version.
+
+Step 4: You will see a new folder which would be named your client name you just entered, and that is your client compiled! Just put it in your .minecraft and you are done. (And obfuscate the jar if you want)
