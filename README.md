@@ -1,11 +1,11 @@
 # GradleMCP
 A simple to setup workspace to use mcp with Gradle.
 
-Lunix: Yes
+Lunix: Yes, tested.
 
-MacOS: Not tested but probably
+MacOS: Yes, tested.
 
-Windows: No, if you would like to be a windows contributor message Hippo#5628 on discord.
+Windows: No, but it is now coming.
 
 Supported versions:
 
