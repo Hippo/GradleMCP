@@ -25,8 +25,6 @@ if [ "$OVERRIDE" = true ] ; then
 	fi
 fi
 
-#!/bin/sh
-
 clear
 echo "Building a GradleMCP..."
 
