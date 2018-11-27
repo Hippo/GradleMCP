@@ -5,7 +5,7 @@ Linux: Yes, tested.
 
 MacOS: Yes, tested.
 
-Windows: No, but it is now coming.
+Windows: Yes, tested.
 
 Supported versions:
 
@@ -21,7 +21,13 @@ Step 1: Make a new folder on your desktop call it anything you want, preferably 
 
 Step 2: Download or git clone this repository in that folder
 
-Step 3: Remove everything except the contents inside of the '1.8.8' folder. So you should end up with your client folder, with 3 files. (build.gradle, BuildProject.sh, CompileClient.sh)
+Step 3: Remove everything except the contents inside of the '1.8.8' folder. So you should end up with your client folder, with 3 files. (build.gradle, BuildProject.sh/bat, CompileClient.sh/bat)
+
+# Windows Users #
+
+Step 4: Run BuildProject.bat
+
+# Linux/Mac users only #
 
 Step 4: Open the folder in terminal and type "chmod +x BuildProject.sh" and hit enter
 
@@ -89,9 +95,17 @@ Now you are done! Just click the green arrow right by the dropdown box then star
 
 # How to compile #
 
+# Linux Users / Mac Users #
+
 Step 1: Open your client folder with terminal and type "chmod +x CompileClient.sh"
 
 Step 2: Type in the terminal "./CompileClient.sh"
+
+# Windows Users #
+
+Step 1 : Run CompileClient.bat
+
+_________________________________________________________________________________
 
 Step 3: Sit back and wait for the message "Please enter a client name and version (example: Client v1):" then you will enter your client name and (optional) version.
 
