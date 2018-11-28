@@ -85,14 +85,12 @@ powershell -Command "Copy-Item temp/optifine/optfine -Destination src/main/java 
 powershell -Command "Copy-Item temp/optifine/assets -Destination src/main/resources -Force -Recurse"
 
 :END
-if exist temp(
-	echo ^> Cleaning up
-	powershell -Command "Remove-Item temp -Force -Recurse"
-)
+
 echo. 
+IF EXIST temp echo ^> Cleaning up & powershell -Command "Remove-Item temp -Force -Recurse"
 echo ____________________________________
 echo. 
-echo Complete!
-echo Windows port by Asyc, GradleMCP by Hippo
+echo ^> Complete!
+echo ^> Windows port by Asyc, GradleMCP by Hippo
 
 PAUSE
