@@ -30,7 +30,7 @@ echo "Building a GradleMCP..."
 
 echo "Downloading resources..."
 MCP_DOWNLOAD="http://www.modcoderpack.com/files/mcp918.zip"
-OPTIFINE_DOWNLOAD="https://optifinesource.co.uk/uploads/1.8/Optifine%20SRC%20Version%20[1.8.8%20HD%20U%20E1].rar"
+OPTIFINE_DOWNLOAD="https://github.com/Hippah/OptifineSource/raw/master/optifine_1.8.8.zip"
 
 if [ ! -d "mcp" ] ; then
 	mkdir mcp
@@ -81,12 +81,12 @@ echo "Complete!"
 echo "Would you like to install optifine aswell? [y/n]"
 read answer
 
-if [ $answer = "y" ] ; then
+if [ "$answer" = "y" ] ; then
 	echo "Installing optifine"
 	cd src/main/java
-	wget $OPTIFINE_DOWNLOAD -O optifine.rar --no-check-certificate
-	unrar -f optifine.rar
-	rm optifine.rar
+	wget $OPTIFINE_DOWNLOAD -O optifine.zip
+	unzip -o optifine.zip
+	rm optifine.zip
 	echo "Optifine installed!"
 fi
 
