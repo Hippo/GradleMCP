@@ -41,7 +41,7 @@ wget $MCP_DOWNLOAD -O mcp918.zip
 echo "Executing..."
 unzip mcp918.zip
 rm mcp918.zip
-python runtime/decompile.py "$@"
+python2 runtime/decompile.py "$@"
 
 cd ../
 echo "Arranging Project..."
