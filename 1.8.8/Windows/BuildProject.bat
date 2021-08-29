@@ -1,96 +1,76 @@
-@echo off
-title GradleMCP
-setlocal enabledelayedexpansion
-:CHECK
-IF EXIST src (
-	set /P b=Warning! This will clear your current project. Do you want to continue[Y/N]? 
-	if /I "!b!" EQU "Y" goto :START
-	if /I "!b!" EQU "N" goto :END
-	goto :check
-)
+plugins {
+    id 'java'
+}
 
-:START
-IF EXIST src powershell -Command "Remove-Item src -Force -Recurse"
+group 'example.client'
+version 'MC_1.8.9'
 
-IF EXIST .minecraft powershell -Command "Remove-Item .minecraft -Force -Recurse"
-
-IF EXIST temp powershell -Command "Remove-Item temp -Force -Recurse"
+sourceCompatibility = 1.8
 
 
-echo ^> Creating Temp Directory
-mkdir temp
-cd temp
+repositories {
+    mavenCentral()
+    maven {
+        url "https://libraries.minecraft.net/"
+    }
+    maven {
+        url "https://mvnrepository.com/artifact"
+    }
+    maven{
+        url "http://nifty-gui.sourceforge.net/nifty-maven-repo/"
+    }
+}
 
-echo ^> Downloading 7Zip
-powershell -Command "(New-Object Net.WebClient).DownloadFile('https://www.7-zip.org/a/7za920.zip', '7Z.zip');
-powershell -Command "Expand-Archive 7Z.zip -Force"
-powershell -Command "Copy-Item -Path 7Z/7za.exe -Destination ./"
-powershell -Command "Remove-Item 7Z -Force -Recurse"
-del 7Z.zip
+configurations {
+    addLib
+}
 
-echo ^> Downloading MCP
-powershell -Command "(New-Object Net.WebClient).DownloadFile('http://www.modcoderpack.com/files/mcp918.zip', 'mcp.zip');
-echo ^> Unzipping MCP
-7za x mcp.zip -y -omcp > NUL:
-del mcp.zip
-cd mcp
-echo ^> Running decompile script
-echo. 
-runtime\bin\python\python_mcp runtime\decompile.py %*
-echo. 
-echo ^> Arranging source code
-cd src
+dependencies {
 
-mkdir "main/resources"
-ren minecraft java
-powershell -Command "Move-Item -Path java -Destination main/"
-cd ../../../
-powershell -Command "Move-Item -Path temp/mcp/src/ -Destination ./"
-mkdir .minecraft
-powershell -Command "Copy-Item -Path temp/mcp/jars/* -Destination .minecraft/ -Force -Recurse"
-powershell -Command "Remove-Item temp/mcp -Force -Recurse"
-powershell -Command "Remove-Item .minecraft/libraries -Force -Recurse"
-powershell -Command "Copy-Item .minecraft/versions/1.8.8/1.8.8.jar -Destination temp"
+    implementation group: 'oshi-project', name: 'oshi-core', version: '1.1'
+    implementation group: 'net.java.dev.jna', name: 'jna', version: '3.4.0'
+    implementation group: 'net.java.dev.jna', name: 'platform', version: '3.4.0'
+    implementation group: 'com.ibm.icu', name: 'icu4j', version: '62.1'
+    implementation group: 'net.sf.jopt-simple', name: 'jopt-simple', version: '4.9'
+    implementation group: "com.paulscode", name: "codecjorbis", version: "20101023"
+    implementation group: "com.paulscode", name: "codecwav", version: "20101023"
+    implementation group: "com.paulscode", name: "libraryjavasound", version: "20101123"
+    implementation group: "com.paulscode", name: "librarylwjglopenal", version: "20100824"
+    implementation group: "com.paulscode", name: "soundsystem", version: "20120107"
+    implementation group: 'io.netty', name: 'netty-all', version: '4.0.23.Final'
+    implementation group: 'com.google.guava', name: 'guava', version: '17.0'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.6'
+    implementation group: 'commons-codec', name: 'commons-codec', version: '1.11'
+    implementation group: 'net.java.jinput', name: 'jinput', version: '2.0.9'
+    implementation group: 'net.java.jutils', name: 'jutils', version: '1.0.0'
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
+    implementation group: 'org.apache.commons', name: 'commons-compress', version: '1.18'
+    implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.6'
+    implementation group: 'commons-logging', name: 'commons-logging', version: '1.2'
+    implementation group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.10'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.0-beta9'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.0-beta9'
+    implementation group: 'org.lwjgl.lwjgl', name: 'lwjgl', version: '2.9.3'
+    implementation group: 'org.lwjgl.lwjgl', name: 'lwjgl_util', version: '2.9.3'
+    implementation group: 'com.mojang', name: 'realms', version: '1.7.59'
+    implementation group: 'com.mojang', name: 'authlib', version: '1.5.21'
+    implementation group: 'tv.twitch', name: 'twitch', version: '6.5'
 
-echo ^> Unpacking jar
-cd temp
+    /**
+     * Example of adding a dependency, remove this comment if tou want to add slick2d to your client.
+     * addLib group: 'slick', name: 'slick', version: '20121001-264'
+     */
 
-7za x 1.8.8.jar -y -o1.8.8 > NUL:
+    configurations.implementation.extendsFrom(configurations.addLib)
+}
 
-cd ../
-
-echo ^> Copying assets
-powershell -Command "Move-Item -Path temp/1.8.8/assets -Destination src/main/resources/"
-
-echo ^> Complete!
-
-:CHOICE
-echo. 
-set /P c=Do you want to install Optifine aswell[Y/N]? 
-if /I "%c%" EQU "Y" goto :OPTIFINE
-if /I "%c%" EQU "N" goto :END
-goto :choice
-
-:OPTIFINE
-echo. 
-cd temp
-echo ^> Downloading optifine.zip
-powershell -Command "$AllProtocols = [System.Net.SecurityProtocolType]'Ssl3,Tls,Tls11,Tls12'; [System.Net.ServicePointManager]::SecurityProtocol = $AllProtocols; Invoke-WebRequest -Uri https://github.com/Hippah/OptifineSource/raw/master/optifine_1.8.8.zip -OutFile optifine.zip"
-echo ^> Unzipping optifine
-7za x optifine.zip -y -ooptifine > NUL:
-cd ../
-echo ^> Installing optifine
-powershell -Command "Copy-Item temp/optifine/net -Destination src/main/java -Force -Recurse"
-powershell -Command "Copy-Item temp/optifine/optfine -Destination src/main/java -Force -Recurse"
-powershell -Command "Copy-Item temp/optifine/assets -Destination src/main/resources -Force -Recurse"
-
-:END
-
-echo. 
-IF EXIST temp echo ^> Cleaning up & powershell -Command "Remove-Item temp -Force -Recurse"
-echo ____________________________________
-echo. 
-echo ^> Complete!
-echo ^> Windows port by Asyc, GradleMCP by Hippo
-
-PAUSE
+jar {
+    from{
+        configurations.addLib.collect {
+            if(!it.isDirectory()){
+                zipTree(it)
+            }
+        }
+    }
+}
