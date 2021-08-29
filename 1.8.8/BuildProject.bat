@@ -29,7 +29,7 @@ powershell -Command "Remove-Item 7Z -Force -Recurse"
 del 7Z.zip
 
 echo ^> Downloading MCP
-powershell -Command "(New-Object Net.WebClient).DownloadFile('https://download856.mediafire.com/ovk4lisqjjeg/w2xhirqwu4s5u0m/MCP_1.8.9.zip', 'mcp.zip');
+powershell -Command "(New-Object Net.WebClient).DownloadFile('http://www.modcoderpack.com/files/mcp918.zip', 'mcp.zip');
 echo ^> Unzipping MCP
 7za x mcp.zip -y -omcp > NUL:
 del mcp.zip
@@ -50,17 +50,17 @@ mkdir .minecraft
 powershell -Command "Copy-Item -Path temp/mcp/jars/* -Destination .minecraft/ -Force -Recurse"
 powershell -Command "Remove-Item temp/mcp -Force -Recurse"
 powershell -Command "Remove-Item .minecraft/libraries -Force -Recurse"
-powershell -Command "Copy-Item .minecraft/versions/1.8.9/1.8.9.jar -Destination temp"
+powershell -Command "Copy-Item .minecraft/versions/1.8.8/1.8.8.jar -Destination temp"
 
 echo ^> Unpacking jar
 cd temp
 
-7za x 1.8.9.jar -y -o1.8.9 > NUL:
+7za x 1.8.8.jar -y -o1.8.8 > NUL:
 
 cd ../
 
 echo ^> Copying assets
-powershell -Command "Move-Item -Path temp/1.8.9/assets -Destination src/main/resources/"
+powershell -Command "Move-Item -Path temp/1.8.8/assets -Destination src/main/resources/"
 
 echo ^> Complete!
 
@@ -75,22 +75,22 @@ goto :choice
 echo. 
 cd temp
 echo ^> Downloading optifine.zip
-powershell -Command "$AllProtocols = [System.Net.SecurityProtocolType]'Ssl3,Tls,Tls11,Tls12'; [System.Net.ServicePointManager]::SecurityProtocol = $AllProtocols; Invoke-WebRequest -Uri https://www.mediafire.com/file/3ae49n16p7wcxfa/optifine.zip/file -OutFile optifine.zip"
+powershell -Command "$AllProtocols = [System.Net.SecurityProtocolType]'Ssl3,Tls,Tls11,Tls12'; [System.Net.ServicePointManager]::SecurityProtocol = $AllProtocols; Invoke-WebRequest -Uri https://github.com/Hippah/OptifineSource/raw/master/optifine_1.8.8.zip -OutFile optifine.zip"
 echo ^> Unzipping optifine
 7za x optifine.zip -y -ooptifine > NUL:
 cd ../
 echo ^> Installing optifine
 powershell -Command "Copy-Item temp/optifine/net -Destination src/main/java -Force -Recurse"
-powershell -Command "Copy-Item temp/optifine/javax -Destination src/main/java -Force -Recurse"
+powershell -Command "Copy-Item temp/optifine/optfine -Destination src/main/java -Force -Recurse"
 powershell -Command "Copy-Item temp/optifine/assets -Destination src/main/resources -Force -Recurse"
 
 :END
 
 echo. 
+IF EXIST temp echo ^> Cleaning up & powershell -Command "Remove-Item temp -Force -Recurse"
 echo ____________________________________
 echo. 
 echo ^> Complete!
-echo ^> Windows port by Asyc, GradleMCP by Hippo, 1.8.9 port by clark
+echo ^> Windows port by Asyc, GradleMCP by Hippo
 
 PAUSE
-
