@@ -29,8 +29,8 @@ clear
 echo "Building a GradleMCP..."
 
 echo "Downloading resources..."
-MCP_DOWNLOAD="http://www.modcoderpack.com/files/mcp918.zip"
-OPTIFINE_DOWNLOAD="https://github.com/Hippah/OptifineSource/raw/master/optifine_1.8.8.zip"
+MCP_DOWNLOAD="https://download856.mediafire.com/ovk4lisqjjeg/w2xhirqwu4s5u0m/MCP_1.8.9.zip"
+OPTIFINE_DOWNLOAD="ttps://www.mediafire.com/file/3ae49n16p7wcxfa/optifine.zip/file"
 
 if [ ! -d "mcp" ] ; then
 	mkdir mcp
@@ -65,17 +65,17 @@ mv mcp/temp/src/minecraft/pack.png src/main/resources
 rm -r .minecraft/libraries
 rm -r mcp
 
-if [ ! -d ".minecraft/versions/1.8.8/temp" ] ; then
-	mkdir .minecraft/versions/1.8.8/temp
+if [ ! -d ".minecraft/versions/1.8.9temp" ] ; then
+	mkdir .minecraft/versions/1.8.9/temp
 fi
 
-cd .minecraft/versions/1.8.8/
-cp 1.8.8.jar temp
+cd .minecraft/versions/1.8.9/
+cp 1.8.9.jar temp
 cd temp
-unzip 1.8.8.jar
+unzip 1.8.9.jar
 cd ../../../../
-mv .minecraft/versions/1.8.8/temp/assets src/main/resources
-rm -r .minecraft/versions/1.8.8/temp
+mv .minecraft/versions/1.8.9/temp/assets src/main/resources
+rm -r .minecraft/versions/1.8.9/temp
 echo "Complete!"
 
 echo "Would you like to install optifine aswell? [y/n]"
